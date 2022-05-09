@@ -1,0 +1,84 @@
+﻿<Window x:Class="XwaSalvageYardScoreEditor.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:XwaSalvageYardScoreEditor"
+        mc:Ignorable="d"
+        Title="Xwa Salvage Yard Score Editor"
+        Height="450" Width="800"
+        UseLayoutRounding="True">
+    <Window.Resources>
+        <Style x:Key="listBoxItemStyle" TargetType="{x:Type ListBoxItem}">
+            <Style.Triggers>
+                <EventTrigger RoutedEvent="GotKeyboardFocus">
+                    <BeginStoryboard>
+                        <Storyboard >
+                            <BooleanAnimationUsingKeyFrames Storyboard.TargetProperty="IsSelected" >
+                                <DiscreteBooleanKeyFrame Value="True" KeyTime="0:0:0"/>
+                            </BooleanAnimationUsingKeyFrames>
+                        </Storyboard>
+                    </BeginStoryboard>
+                </EventTrigger>
+            </Style.Triggers>
+        </Style>
+    </Window.Resources>
+    <DockPanel>
+        <ToolBarTray DockPanel.Dock="Top" IsLocked="True">
+            <ToolBar>
+                <Button x:Name="openButton" Content="Open..." Click="OpenButton_Click" />
+                <Button x:Name="saveButton" Content="Save As..." Click="SaveButton_Click" />
+            </ToolBar>
+        </ToolBarTray>
+        <StatusBar DockPanel.Dock="Bottom">
+            <TextBlock Text="{Binding ScoreTableFileName}" />
+        </StatusBar>
+        <DockPanel>
+            <StackPanel DockPanel.Dock="Bottom">
+                <Button x:Name="newCraftButton" Content="New Craft" Click="NewCraftButton_Click" />
+                <Button x:Name="deleteCraftButton" Content="Delete Craft" Click="DeleteCraftButton_Click" Tag="{Binding ScoreTable/}" />
+            </StackPanel>
+            <ListView ItemsSource="{Binding ScoreTable}" SelectionMode="Single" IsSynchronizedWithCurrentItem="True" ItemContainerStyle="{StaticResource listBoxItemStyle}">
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn Header="Craft">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBox Text="{Binding ModelIndex, UpdateSourceTrigger=PropertyChanged}" Width="100" />
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                    </GridView>
+                </ListView.View>
+            </ListView>
+        </DockPanel>
+        <ListView ItemsSource="{Binding ScoreTable/Scores}" SelectionMode="Single" IsSynchronizedWithCurrentItem="True">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="Challenge Index" DisplayMemberBinding="{Binding ChallengeIndex}" />
+                </GridView>
+            </ListView.View>
+        </ListView>
+        <ListView ItemsSource="{Binding ScoreTable/Scores/Scores}" SelectionMode="Single" IsSynchronizedWithCurrentItem="True" ItemContainerStyle="{StaticResource listBoxItemStyle}">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="Pilot Index" DisplayMemberBinding="{Binding ScoreIndex}" />
+                    <GridViewColumn Header="Name">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBox Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}" Width="100" />
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn Header="Time">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBox Text="{Binding Time, UpdateSourceTrigger=PropertyChanged}" Width="100" />
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                </GridView>
+            </ListView.View>
+        </ListView>
+    </DockPanel>
+</Window>
