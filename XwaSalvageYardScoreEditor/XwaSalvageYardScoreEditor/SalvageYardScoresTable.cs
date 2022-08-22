@@ -168,5 +168,42 @@ namespace XwaSalvageYardScoreEditor
 
             table.Add(craft);
         }
+
+        public static void SortByModelIndex(ObservableCollection<SalvageYardCraftScore> table)
+        {
+            var crafts = table
+                .OrderBy(t => t.ModelIndex)
+                .ToList();
+
+            table.Clear();
+
+            foreach (SalvageYardCraftScore craft in crafts)
+            {
+                table.Add(craft);
+            }
+        }
+
+        public static void SortByTime(ObservableCollection<SalvageYardCraftScore> table)
+        {
+            foreach (SalvageYardCraftScore craft in table)
+            {
+                foreach (SalvageYardChallengeScore challenge in craft.Scores)
+                {
+                    var scores = challenge.Scores
+                        .OrderBy(t => t.Time)
+                        .ToList();
+
+                    challenge.Scores.Clear();
+
+                    for (int scoreIndex = 0; scoreIndex < scores.Count; scoreIndex++)
+                    {
+                        SalvageYardScore score = scores[scoreIndex];
+                        score.ScoreIndex = scoreIndex;
+
+                        challenge.Scores.Add(score);
+                    }
+                }
+            }
+        }
     }
 }

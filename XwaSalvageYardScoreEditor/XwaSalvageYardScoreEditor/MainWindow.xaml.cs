@@ -87,6 +87,21 @@ namespace XwaSalvageYardScoreEditor
             }
         }
 
+        private void SortButton_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                SalvageYardScoresTable.SortByModelIndex(this.ScoreTable);
+                SalvageYardScoresTable.SortByTime(this.ScoreTable);
+                this.DataContext = null;
+                this.DataContext = this;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(this, ex.ToString(), ex.Source, MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
         private void NewCraftButton_Click(object sender, RoutedEventArgs e)
         {
             SalvageYardScoresTable.AddNew(this.ScoreTable);

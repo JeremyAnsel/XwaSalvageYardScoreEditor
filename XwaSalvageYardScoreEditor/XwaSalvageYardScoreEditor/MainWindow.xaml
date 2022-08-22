@@ -28,6 +28,7 @@
             <ToolBar>
                 <Button x:Name="openButton" Content="Open..." Click="OpenButton_Click" />
                 <Button x:Name="saveButton" Content="Save As..." Click="SaveButton_Click" />
+                <Button x:Name="sortButton" Content="Sort" Click="SortButton_Click" />
             </ToolBar>
         </ToolBarTray>
         <StatusBar DockPanel.Dock="Bottom">
